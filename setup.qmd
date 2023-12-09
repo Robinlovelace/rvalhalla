@@ -69,7 +69,7 @@ Let's create a function that does that with the `httr2` package and using the `R
 ```{r}
 library(httr2)
 library(RcppSimdJson)
-vh_get = function(resource = "optimized_route", from, to, costing = "auto", url = "http://localhost:8002/", ...) {
+vh_get_test = function(resource = "optimized_route", from, to, costing = "auto", url = "http://localhost:8002/", ...) {
 
   params = list(
     locations = list(
@@ -97,7 +97,7 @@ vh_sf = function(json) {
 ```
 
 ```{r}
-route_example = vh_get(from = andorra_la_vella, to = pas_de_la_casa)
+route_example = vh_get_test(from = andorra_la_vella, to = pas_de_la_casa)
 # str(route_example)
 ```
 
@@ -106,7 +106,7 @@ route_example_sf = vh_sf(route_example)
 ```
 
 ```{r}
-route_example_bike = vh_get(from = andorra_la_vella, to = pas_de_la_casa, costing = "bicycle")
+route_example_bike = vh_get_test(from = andorra_la_vella, to = pas_de_la_casa, costing = "bicycle")
 route_example_bike_sf = vh_sf(route_example_bike)
 ```
 
@@ -127,7 +127,7 @@ Next we'll try to change the costing based on the following exmaple from the doc
 That can be done by adding the `use_roads` parameter to the `directions_options` list:
 
 ```{r}
-route_example_bike_roads = vh_get(from = andorra_la_vella, to = pas_de_la_casa, costing = "bicycle", costing_options = list(bicycle= list(use_roads = 0.1)))
+route_example_bike_roads = vh_get_test(from = andorra_la_vella, to = pas_de_la_casa, costing = "bicycle", costing_options = list(bicycle= list(use_roads = 0.1)))
 route_example_bike_roads_sf = vh_sf(route_example_bike_roads)
 
 plot(route_example_bike_roads_sf$geometry)

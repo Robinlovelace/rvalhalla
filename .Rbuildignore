@@ -1,0 +1,4 @@
+^custom_files$
+^setup_files$
+^setup\.qmd$
+^setup\.md$
