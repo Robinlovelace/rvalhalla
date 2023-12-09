@@ -34,9 +34,8 @@ After that navigate to <http://localhost:8002/> and you’ll see the
 endpoint.
 
 ``` r
-# library(rvalhalla)
-devtools::load_all()
-#> ℹ Loading rvallhala
+library(rvalhalla)
+# devtools::load_all() # for development
 ```
 
 Let’s calculate a single route in Andorra, between two well known

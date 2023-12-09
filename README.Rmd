@@ -43,7 +43,7 @@ docker start valhalla_gis-ops
 After that navigate to http://localhost:8002/ and you'll see the endpoint.
 
 ```{r usage}
-library(rvalhalla) 
+library(rvalhalla)
 # devtools::load_all() # for development
 ```
 
