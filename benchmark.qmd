@@ -3,6 +3,21 @@ format: gfm
 title: Benchmarks
 ---
 
+A basic benchmark of `opentripplanner` and `rvalhalla` is shown below.
+
+```{r}
+#| eval: true
+#| message: false
+knitr::kable(readr::read_csv("bench.csv"))
+```
+
+Note: this benchmark is not comparing like with like, and is designed to be a basis for future benchmarks, perhaps with other routing engines and other interfaces with reference to more realistic use cases.
+It does show that `rvalhalla` is reasonably fast for the simple case of routing between two points.
+
+See the reproducible code below to generate the benchmark at home.
+
+# Setup
+
 
 ```{r}
 remotes::install_cran("opentripplanner")
@@ -10,6 +25,7 @@ library(opentripplanner)
 library(sf)
 knitr::opts_chunk$set(eval = FALSE)
 ```
+
 
 # opentripplanner
 
@@ -114,9 +130,4 @@ bench = bench::mark(check = FALSE,
   rvalhalla = vh_route(c(-1.17502, 50.64590), c(-1.15339, 50.72266), costing = "pedestrian")
 )
 readr::write_csv(bench[c(1, 4, 5)], "bench.csv")
-```
-
-```{r}
-#| eval: true
-knitr::kable(readr::read_csv("bench.csv"))
 ```

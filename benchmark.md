@@ -1,5 +1,26 @@
 # Benchmarks
 
+A basic benchmark of `opentripplanner` and `rvalhalla` is shown below.
+
+``` r
+knitr::kable(readr::read_csv("bench.csv"))
+```
+
+| expression |  itr/sec | mem_alloc |
+|:-----------|---------:|:----------|
+| otp        | 22.40628 | 639KB     |
+| rvalhalla  | 83.47717 | 110KB     |
+
+Note: this benchmark is not comparing like with like, and is designed to
+be a basis for future benchmarks, perhaps with other routing engines and
+other interfaces with reference to more realistic use cases. It does
+show that `rvalhalla` is reasonably fast for the simple case of routing
+between two points.
+
+See the reproducible code below to generate the benchmark at home.
+
+# Setup
+
 ``` r
 remotes::install_cran("opentripplanner")
 ```
@@ -105,21 +126,3 @@ bench = bench::mark(check = FALSE,
 )
 readr::write_csv(bench[c(1, 4, 5)], "bench.csv")
 ```
-
-``` r
-knitr::kable(readr::read_csv("bench.csv"))
-```
-
-    Rows: 2 Columns: 3
-    ── Column specification ────────────────────────────────────────────────────────
-    Delimiter: ","
-    chr (2): expression, mem_alloc
-    dbl (1): itr/sec
-
-    ℹ Use `spec()` to retrieve the full column specification for this data.
-    ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-| expression |  itr/sec | mem_alloc |
-|:-----------|---------:|:----------|
-| otp        | 22.40628 | 639KB     |
-| rvalhalla  | 83.47717 | 110KB     |
