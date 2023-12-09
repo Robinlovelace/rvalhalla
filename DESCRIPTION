@@ -1,4 +1,4 @@
-Package: ravalhalla
+Package: rvalhalla
 Title: Interface to the Valhalla Routing Engine and Accompanying Libraries
 Version: 0.1.0
 Authors@R: c(
