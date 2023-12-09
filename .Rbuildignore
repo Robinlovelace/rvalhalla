@@ -2,3 +2,5 @@
 ^setup_files$
 ^setup\.qmd$
 ^setup\.md$
+^README\.html$
+^README\.Rmd$

@@ -2,7 +2,8 @@ Package: rvallhala
 Title: Interface to the Valhalla Routing API
 Version: 0.1.0
 Authors@R: c(
-    person("Robin", "Lovelace", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-5679-6536"))
+    person("Robin", "Lovelace", email = "rob00x@gmail.com", role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0001-5679-6536"))
     )
 Description: Provides an interface to the Valhalla routing API, allowing users to calculate optimized routes between geographic points.
 License: GPL-3
@@ -13,18 +14,12 @@ LazyData: true
 Depends: R (>= 3.4.0)
 Imports: 
     httr2,
-    glue,
     googlePolylines,
-    sfheaders,
-    methods,
-    vctrs
+    sfheaders
 Suggests: 
     sf,
     knitr,
-    rmarkdown,
-    tinytest,
-    covr,
-    lwgeom
+    rmarkdown
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

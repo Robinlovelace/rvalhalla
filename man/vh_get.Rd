@@ -4,37 +4,32 @@
 \alias{vh_get}
 \title{Get optimized route from Valhalla API}
 \usage{
-vh_get(
-  from,
-  to,
-  costing = "auto",
-  units = "miles",
-  url = "http://localhost:8002/optimized_route",
-  ...,
-  resource = "route"
-)
+vh_get(url = "http://localhost:8002", resource = "route", params = list(), ...)
 }
 \arguments{
-\item{from}{A numeric vector of length 2, specifying the longitude and latitude of the starting point.}
-
-\item{to}{A numeric vector of length 2, specifying the longitude and latitude of the destination.}
-
-\item{costing}{A string specifying the costing model to use for route optimization. Default is "auto".}
-
-\item{units}{A string specifying the units to use for the route distance. Default is "miles".}
-
 \item{url}{A string specifying the URL of the Valhalla API. Default is "http://localhost:8002/optimized_route".}
 
-\item{...}{Additional arguments to pass to httr2::GET.}
+\item{resource}{A string specifying the resource to request from the Valhalla API. Default is "route". Options are:
+\itemize{
+\item "route": Guides you between points by car, bike, foot, and multimodal combinations involving walking and riding public transit. Your apps can use the results from the route service to plan multimodal journeys with narratives to guide users by text and by voice. Valhalla draws data from OpenStreetMap for the main graph and from user-supplied GTFS feeds for multimodal routing.
+\item "optimized_route": Computes the times and distances between many origins and destinations and provides you with an optimized path between the locations.
+\item "matrix": Provides a table of the times and distances between points.
+\item "isochrone": Computes areas that are reachable within specified time periods from a location or set of locations.
+\item "map-matching": Matches coordinates to known roads so you can turn a path into a route with narrative instructions and get the attribute values from that matched line.
+\item "elevation": Finds the elevation along a path or at specified locations.
+\item "expansion": Returns a geojson representation of a graph traversal at a given location.
+\item "locate": Provides detailed metadata about the nodes and edges in the graph.
+\item "status": Returns information about the running server or Valhalla instance.
+\item "centroid": Finds the least cost convergence point of routes from multiple locations.
+}}
+
+\item{params}{Parameters to pass to the Valhalla API as a json object. Default is list().}
+
+\item{...}{Additional parameters to pass to the Valhalla API.}
 }
 \value{
 An sf object representing the optimized route.
 }
 \description{
 Get optimized route from Valhalla API
-}
-\examples{
-if (FALSE) {
-
-}
 }

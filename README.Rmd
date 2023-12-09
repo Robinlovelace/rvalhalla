@@ -47,9 +47,9 @@ pas_de_la_casa = c(1.7333, 42.5425)
 
 ```{r}
 # Calculate the route
-route1 = vh_get(andorra_la_vella, pas_de_la_casa, costing = "pedestrian")
-route2 = vh_get(andorra_la_vella, pas_de_la_casafrom = andorra_la_vella, to = pas_de_la_casa, costing = "bicycle")
-route3 = vh_get(from = andorra_la_vella, to = pas_de_la_casa, costing = "bicycle", costing_options = list(bicycle = list(use_roads = 0.9)))
+route1 = vh_route(andorra_la_vella, pas_de_la_casa, costing = "pedestrian")
+route2 = vh_route(andorra_la_vella, pas_de_la_casafrom = andorra_la_vella, to = pas_de_la_casa, costing = "bicycle")
+route3 = vh_route(from = andorra_la_vella, to = pas_de_la_casa, costing = "bicycle", costing_options = list(bicycle = list(use_roads = 0.9)))
 ```
 
 We can compare them with `{waldo}`:
