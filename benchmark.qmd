@@ -97,7 +97,7 @@ dir.create("custom_files_iow", showWarnings = FALSE)
 oe_download(
   file_url = iow_url$url,
   file_size = iow_url$file_size,
-  download_directory = "custom_files_iow/",
+  download_directory = "custom_files/",
   file_basename = "isle_of_wight"
 )
 
