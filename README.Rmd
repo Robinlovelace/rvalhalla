@@ -22,7 +22,7 @@ This package is based on tests and the demo in the [setup.qmd](setup.md) file.
 
 ## Installation
 
-```{r install, eval = FALSE}
+```{r install, eval=FALSE}
 devtools::install_github("robinlovelace/rvalhalla")
 ```
 
@@ -43,8 +43,8 @@ docker start valhalla_gis-ops
 After that navigate to http://localhost:8002/ and you'll see the endpoint.
 
 ```{r usage}
-# library(rvalhalla)
-devtools::load_all()
+library(rvalhalla) 
+# devtools::load_all() # for development
 ```
 
 Let's calculate a single route in Andorra, between two well known places: Andorra la Vella and Pas de la Casa.

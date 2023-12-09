@@ -1,14 +1,14 @@
-Package: rvallhala
-Title: Interface to the Valhalla Routing API
+Package: ravalhalla
+Title: Interface to the Valhalla Routing Engine and Accompanying Libraries
 Version: 0.1.0
 Authors@R: c(
     person("Robin", "Lovelace", email = "rob00x@gmail.com", role = c("aut", "cre"),
       comment = c(ORCID = "0000-0001-5679-6536"))
     )
-Description: Provides an interface to the Valhalla routing API, allowing users to calculate optimized routes between geographic points.
+Description: Provides an interface to the Valhalla APIs, allowing users to calculate optimized routes between geographic points and undertake a range of transport network analysis tasks, including isochrone generation and map matching.
 License: GPL-3
-URL: https://github.com/yourusername/rvallhala
-BugReports: https://github.com/yourusername/rvallhala/issues
+URL: https://github.com/robinlovelace/rvallhala
+BugReports: https://github.com/robinlovelace/rvallhala/issues
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 3.4.0)
