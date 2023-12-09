@@ -5,3 +5,6 @@
 ^README\.html$
 ^README\.Rmd$
 ^\.github$
+^bench\.csv$
+^benchmark\.qmd$
+^benchmark\.md$
