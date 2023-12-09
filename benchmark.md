@@ -14,8 +14,8 @@ knitr::kable(readr::read_csv("bench.csv"))
 Note: this benchmark is not comparing like with like, and is designed to
 be a basis for future benchmarks, perhaps with other routing engines and
 other interfaces with reference to more realistic use cases. It does
-show that `rvalhalla` is reasonably fast for the simple case of routing
-between two points.
+show that `rvalhalla` is fast for the simple case of routing between two
+points.
 
 See the reproducible code below to generate the benchmark at home.
 
@@ -64,19 +64,7 @@ otpcon = otp_connect(timezone = "Europe/London")
 
 Following the routing tutorial in
 [github.com/itsleeds/TDS](https://github.com/ITSLeeds/TDS/blob/ff0c7346d2f872539faae11224aaa76b79e8c2b6/practicals/6-routing.Rmd),
-let’s generate some routes:
-
-``` r
-u = "https://github.com/ITSLeeds/TDS/releases/download/22/NTEM_flow.geojson"
-desire_lines = read_sf(u)
-desire_lines = desire_lines[1:9, ]
-fromPlace = lwgeom::st_startpoint(desire_lines)
-toPlace = lwgeom::st_endpoint(desire_lines)
-fromPlace = st_sf(data.frame(id = desire_lines$from, geometry = fromPlace))
-toPlace = st_sf(data.frame(id = desire_lines$to, geometry = toPlace))
-```
-
-Calculate a route as follows:
+let’s generate a route:
 
 ``` r
 route = otp_plan(otpcon, 
@@ -84,34 +72,25 @@ route = otp_plan(otpcon,
                   toPlace = c(-1.15339, 50.72266))
 ```
 
-Calculate all routes as follows:
-
-We can do the same with rvalhalla as follows:
+# rvalhalla
 
 ``` r
 library(osmextract)
 iow_url = oe_match("Isle of Wight")
 iow_url
-dir.create("custom_files_iow", showWarnings = FALSE)
-oe_download(
-  file_url = iow_url$url,
-  file_size = iow_url$file_size,
-  download_directory = "custom_files_iow/",
-  file_basename = "isle_of_wight"
-)
 ```
 
+    $url
+    [1] "https://download.geofabrik.de/europe/great-britain/england/isle-of-wight-latest.osm.pbf"
+
+    $file_size
+    [1] 8600000
+
 ``` bash
-# Stop the running container:
-docker stop valhalla_gis-ops
-# Remove the container:
-docker rm valhalla_gis-ops
-docker rmi ghcr.io/gis-ops/docker-valhalla/valhalla:latest
 docker run -dt --name valhalla_gis-ops -p 8002:8002 -v $PWD/custom_files:/custom_files -e tile_urls=https://download.geofabrik.de/europe/great-britain/england/isle-of-wight-latest.osm.pbf ghcr.io/gis-ops/docker-valhalla/valhalla:latest
 ```
 
 ``` r
-devtools::load_all()
 library(rvalhalla)
 route_vh = vh_route(c(-1.17502, 50.64590), c(-1.15339, 50.72266), costing = "pedestrian")
 plot(route_vh)
