@@ -1,0 +1,124 @@
+---
+format: gfm
+---
+
+
+```{r}
+library(sf)
+```
+
+``` bash
+# download a file to custom_files and start valhalla
+mkdir custom_files
+wget -O custom_files/andorra-latest.osm.pbf https://download.geofabrik.de/europe/andorra-latest.osm.pbf
+# docker run -dt --name valhalla_gis-ops -p 8002:8002 -v $PWD/custom_files:/custom_files ghcr.io/gis-ops/docker-valhalla/valhalla:latest
+# docker rmi ghcr.io/gis-ops/docker-valhalla/valhalla:latest --force # if you want to rebuild the image
+# To fix this error: docker: Error response from daemon: Conflict. The container name "/valhalla_gis-ops" is already in use by container "638e172839bd6113bb3c855716a1aa92f076f8fe85e4b0faef190bff0d200c69". You have to remove (or rename) that container to be able to reuse that name.
+# docker rm valhalla_gis-ops --force
+# or let the container download the file for you
+docker run -dt --name valhalla_gis-ops -p 8002:8002 -v $PWD/custom_files:/custom_files -e tile_urls=https://download.geofabrik.de/europe/andorra-latest.osm.pbf ghcr.io/gis-ops/docker-valhalla/valhalla:latest
+```
+
+After that navigate to http://localhost:8002/ and you'll see the endpoint.
+
+Let's calculate a single route in Andorra, between two well known places: Andorra la Vella and Pas de la Casa.
+
+```{r}
+andorra_la_vella = c(1.5218, 42.5075)
+pas_de_la_casa = c(1.7333, 42.5425)
+```
+
+With reference to the [documentation](https://valhalla.github.io/valhalla/api/optimized/api-reference/) which states that it takes queries in the form of:
+
+```
+localhost:8002/optimized_route?json={}
+```
+
+With contents such as
+
+```json
+{"locations":[{"lat":40.042072,"lon":-76.306572},{"lat":39.992115,"lon":-76.781559},{"lat":39.984519,"lon":-76.6956},{"lat":39.996586,"lon":-76.769028},{"lat":39.984322,"lon":-76.706672}],"costing":"auto","directions_options":{"units":"miles"}}
+```
+
+We can construct a query URL as follows:
+
+```{r}
+url_raw = 'http://localhost:8002/optimized_route?json={"locations":[{"lon":1.5218,"lat":42.5075},{"lon":1.7333,"lat":42.5425}],"costing":"auto","directions_options":{"units":"miles"}}'
+json = jsonlite::fromJSON(url_raw)
+names(json)
+names(json$trip)
+names(json$trip$legs)
+length(json$trip$legs$shape)
+str(json)
+```
+
+We can convert the `$shape` column to a `sf` object and plot it.
+
+```{r}
+remotes::install_cran("googlePolylines")
+line = googlePolylines::decode(json$trip$legs$shape)
+class(line)
+length(line)
+class(line[[1]])
+line_sf = sfheaders::sf_linestring(line[[1]])
+plot(line_sf)
+```
+
+Let's create a function that does that with the `httr2` package and using the `RcppSimdJson` package to parse the JSON:
+
+```{r}
+library(httr2)
+library(RcppSimdJson)
+vh_get = function(resource = "optimized_route", from, to, costing = "auto", url = "http://localhost:8002/") {
+
+  params = list(
+    locations = list(
+        list(lon = from[1], lat = from[2]),
+        list(lon = to[1], lat = to[2])
+      ),
+      costing = costing,
+      directions_options = list(units = "miles")
+    )
+#   names(params) = paste0("_", names(params))
+  
+  request(url) |> 
+    req_url_path_append(resource) |> 
+    req_body_json(params) |> 
+    # req_user_agent("my_package_name (http://my.package.web.site)") |> 
+    req_perform() |> 
+    resp_body_json()
+}
+vh_sf = function(json) {
+  line = googlePolylines::decode(json$trip$legs[[1]]$shape)
+  line_sf = sfheaders::sf_linestring(line[[1]])
+  line_sf
+}
+```
+
+```{r}
+route_example = vh_get(from = andorra_la_vella, to = pas_de_la_casa)
+# str(route_example)
+```
+
+```{r}
+route_example_sf = vh_sf(route_example)
+```
+
+```{r}
+route_example_bike = vh_get(from = andorra_la_vella, to = pas_de_la_casa, costing = "bicycle")
+route_example_bike_sf = vh_sf(route_example_bike)
+```
+
+::: {layout-ncol="2"}
+
+```{r}
+plot(route_example_sf)
+plot(route_example_bike_sf)
+```
+
+:::
+
+
+```{r}
+```
+
