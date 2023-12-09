@@ -3,6 +3,10 @@ Vallhala for R
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/Robinlovelace/rvalhalla/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Robinlovelace/rvalhalla/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 This package is based on tests and the demo in the [setup.qmd](setup.md)
 file.
 
@@ -19,6 +23,9 @@ devtools::install_github("robinlovelace/rvalhalla")
 mkdir custom_files
 wget -O custom_files/andorra-latest.osm.pbf https://download.geofabrik.de/europe/andorra-latest.osm.pbf
 docker run -dt --name valhalla_gis-ops -p 8002:8002 -v $PWD/custom_files:/custom_files -e tile_urls=https://download.geofabrik.de/europe/andorra-latest.osm.pbf ghcr.io/gis-ops/docker-valhalla/valhalla:latest
+
+# If the container already exists:
+docker start valhalla_gis-ops
 ```
 
 After that navigate to <http://localhost:8002/> and you’ll see the
