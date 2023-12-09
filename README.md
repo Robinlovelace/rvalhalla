@@ -62,3 +62,17 @@ ggplot() +
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+# Links
+
+This project builds on and was inspired by the following projects, which
+are worth checking out:
+
+- [pyvalhalla](https://github.com/gis-ops/pyvalhalla), a Python wrapper
+  for Valhalla
+- The excellent [valhalla API
+  documentation](https://valhalla.github.io/valhalla/api/)
+- [valhalla-docker](https://github.com/gis-ops/docker-valhalla),
+  well-maintained Docker images for Valhalla
+- [valhallar](https://github.com/chris31415926535/valhallr), an
+  alternative R package for Valhalla
