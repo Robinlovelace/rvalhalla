@@ -28,7 +28,9 @@ vh_get = function(url = "http://localhost:8002", resource = "route", params = li
 
 vh_sfc = function(json) {
   line = googlePolylines::decode(json)
-  line_sf = sfheaders::sf_linestring(line[[1]])
+  line[[1]] = line[[1]]/10 # correcting lon/lat being off by a factor of 10.
+  line_sf = sfheaders::sf_linestring(line[[1]], x="lon", y="lat") |>
+    sf::st_set_crs("WGS84")
   line_sf
 }
 
