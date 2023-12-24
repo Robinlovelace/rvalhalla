@@ -8,3 +8,5 @@
 ^bench\.csv$
 ^benchmark\.qmd$
 ^benchmark\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
