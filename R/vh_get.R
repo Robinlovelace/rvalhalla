@@ -73,7 +73,7 @@ vh_route = function(
 
 vh_resources = function() {
   c(
-    "route", "optimized_route", "matrix", "isochrone", "map-matching",
+    "route", "optimized_route", "sources_to_targets", "isochrone", "map-matching",
     "elevation", "expansion", "locate", "status", "centroid"
   )
 }

@@ -2,12 +2,12 @@
 % Please edit documentation in R/vh_get.R
 \name{vh_get}
 \alias{vh_get}
-\title{Get optimized route from Valhalla API}
+\title{Get responses from the Valhalla API}
 \usage{
 vh_get(url = "http://localhost:8002", resource = "route", params = list(), ...)
 }
 \arguments{
-\item{url}{A string specifying the URL of the Valhalla API. Default is "http://localhost:8002/optimized_route".}
+\item{url}{A string specifying the URL of the Valhalla API. Default is "http://localhost:8002/route".}
 
 \item{resource}{A string specifying the resource to request from the Valhalla API. Default is "route". Options are:
 \itemize{
@@ -31,5 +31,5 @@ vh_get(url = "http://localhost:8002", resource = "route", params = list(), ...)
 An sf object representing the optimized route.
 }
 \description{
-Get optimized route from Valhalla API
+Get responses from the Valhalla API
 }

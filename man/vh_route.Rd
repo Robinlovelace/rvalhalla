@@ -23,7 +23,7 @@ vh_route(
 \item{directions_options}{A named list.
 By default this is list(units = "km") specifying the units to use.}
 
-\item{url}{A string specifying the URL of the Valhalla API. Default is "http://localhost:8002/optimized_route".}
+\item{url}{A string specifying the URL of the Valhalla API. Default is "http://localhost:8002/route".}
 
 \item{...}{Additional parameters to pass to the Valhalla API.}
 }
