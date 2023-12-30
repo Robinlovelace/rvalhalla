@@ -1,6 +1,6 @@
-#' Get optimized route from Valhalla API
+#' Get responses from the Valhalla API
 #'
-#' @param url A string specifying the URL of the Valhalla API. Default is "http://localhost:8002/optimized_route".
+#' @param url A string specifying the URL of the Valhalla API. Default is "http://localhost:8002/route".
 #' @param params Parameters to pass to the Valhalla API as a json object. Default is list().
 #' @param resource A string specifying the resource to request from the Valhalla API. Default is "route". Options are:
 #' * "route": Guides you between points by car, bike, foot, and multimodal combinations involving walking and riding public transit. Your apps can use the results from the route service to plan multimodal journeys with narratives to guide users by text and by voice. Valhalla draws data from OpenStreetMap for the main graph and from user-supplied GTFS feeds for multimodal routing.
@@ -20,7 +20,6 @@ vh_get = function(url = "http://localhost:8002", resource = "route", params = li
   json = httr2::request(url) |> 
     httr2::req_url_path_append(resource) |> 
     httr2::req_body_json(params) |> 
-    # req_user_agent("my_package_name (http://my.package.web.site)") |> 
     httr2::req_perform() |> 
     httr2::resp_body_json()
   json
@@ -28,7 +27,7 @@ vh_get = function(url = "http://localhost:8002", resource = "route", params = li
 
 vh_sfc = function(json) {
   line = googlePolylines::decode(json)
-  line[[1]] = line[[1]]/10 # correcting lon/lat being off by a factor of 10.
+  line[[1]] = line[[1]] / 10 # correcting lon/lat being off by a factor of 10.
   line_sf = sfheaders::sf_linestring(line[[1]], x="lon", y="lat") |>
     sf::st_set_crs("WGS84")
   line_sf
