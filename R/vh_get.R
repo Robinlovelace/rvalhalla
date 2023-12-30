@@ -17,6 +17,7 @@
 #' @return An sf object representing the optimized route.
 #' @export
 vh_get = function(url = "http://localhost:8002", resource = "route", params = list(), ...) {
+  resource = match_resource(resource)
   json = httr2::request(url) |> 
     httr2::req_url_path_append(resource) |> 
     httr2::req_body_json(params) |> 
@@ -68,4 +69,24 @@ vh_route = function(
     )
   json = vh_get(from, to, costing, units, url = url, params = params, resource = "route")
   vh_sfc(json$trip$legs[[1]]$shape)
+}
+
+vh_resources = function() {
+  c(
+    "route", "optimized_route", "matrix", "isochrone", "map-matching",
+    "elevation", "expansion", "locate", "status", "centroid"
+  )
+}
+
+match_resource = function(user_input) {
+  resources = vh_resources()
+  closest_match = match.arg(user_input, resources)
+  # Message if there's no match:
+  if (is.na(closest_match)) {
+    message(
+      "No match for '", user_input, "'.\n",
+      "Options are: ", paste0(resources, collapse = ", "), "."
+    )
+  }
+  return(closest_match)
 }
