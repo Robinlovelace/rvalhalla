@@ -127,7 +127,7 @@ Next we'll try to change the costing based on the following exmaple from the doc
 That can be done by adding the `use_roads` parameter to the `directions_options` list:
 
 ```{r}
-route_example_bike_roads = vh_get_test(from = andorra_la_vella, to = pas_de_la_casa, costing = "bicycle", costing_options = list(bicycle= list(use_roads = 0.1)))
+route_example_bike_roads = vh_get_test(from = andorra_la_vella, to = pas_de_la_casa, costing = "bicycle", costing_options = list(bicycle = list(use_roads = 0.1)))
 route_example_bike_roads_sf = vh_sf(route_example_bike_roads)
 
 plot(route_example_bike_roads_sf$geometry)
