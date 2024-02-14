@@ -10,31 +10,37 @@
 #' @export
 #'
 #' @examples
-sources_to_targets = function(
+sources_to_targets <- function(
     from,
     to,
     costing = "pedestrian",
     directions_options = list(units = "km"),
     url = "http://localhost:8002",
-    ...
-) {
-  
-  params = list(
-    sources = 
-      purrr::map(seq_len(nrow(from)), function(x) list(lon=from[x,]$lon,lat=from[x,]$lat)),
-    targets = 
-      purrr::map(seq_len(nrow(to)), function(x) list(lon=to[x,]$lon,lat=to[x,]$lat)),
+    ...) {
+  params <- list(
+    sources =
+      purrr::map(seq_len(nrow(from)), function(x) list(lon = from[x, ]$lon, lat = from[x, ]$lat)),
+    targets =
+      purrr::map(seq_len(nrow(to)), function(x) list(lon = to[x, ]$lon, lat = to[x, ]$lat)),
     costing = costing,
     directions_options = directions_options,
     ...
   )
-  json = vh_get(resource="sources_to_targets",
-                from, 
-                to,
-                costing, 
-                units,
-                url = url, 
-                params = params)
-  purrr::map_dfr(json$sources_to_targets, function(x) tibble::as_tibble(x[[1]]))
+  json <- vh_get(
+    resource = "sources_to_targets",
+    from,
+    to,
+    costing,
+    units,
+    url = url,
+    params = params
+  )
+  purrr::map_dfr(json$sources_to_targets, function(x) tibble::as_tibble(x[[1]])) |>
+    # JS indexes from 0. R indexes from 1.
+    dplyr::mutate(to_index = to_index + 1) |>
+    dplyr::mutate(from_index = from_index + 1) |>
+    dplyr::mutate(from_lon = from$lon[from_index]) |>
+    dplyr::mutate(from_lat = from$lat[from_index]) |>
+    dplyr::mutate(to_lon = to$lon[from_index]) |>
+    dplyr::mutate(to_lat = to$lat[from_index])
 }
-  
