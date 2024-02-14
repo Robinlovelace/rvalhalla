@@ -42,5 +42,7 @@ sources_to_targets <- function(
     dplyr::mutate(from_lon = from$lon[from_index]) |>
     dplyr::mutate(from_lat = from$lat[from_index]) |>
     dplyr::mutate(to_lon = to$lon[from_index]) |>
-    dplyr::mutate(to_lat = to$lat[from_index])
+    dplyr::mutate(to_lat = to$lat[from_index]) |>
+    dplyr::select(-to_index) |>
+    dplyr::select(-from_index)
 }
