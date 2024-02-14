@@ -15,7 +15,8 @@ Depends: R (>= 3.4.0)
 Imports: 
     httr2,
     googlePolylines,
-    sfheaders
+    sfheaders,
+    dplyr
 Suggests: 
     sf,
     knitr,
